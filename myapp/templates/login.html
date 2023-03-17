@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<title>{% block title %}login{% endblock %}</title>
+{% block content %}
+<div class="container mt-3">
+    <form method="post">
+      {% csrf_token %}
+      <h1 style=color:blue>Login</h1>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+      </div><br>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+      </div> <br>
+      <div>
+        <input  class='btn btn-danger' type="submit" value="Login">
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    </form>
+{% endblock %}
+
