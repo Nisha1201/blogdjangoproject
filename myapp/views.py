@@ -207,7 +207,9 @@ def user_logout(request):
 def comment_view(request, id):
     print("xsh xs xshgsxnhzsxgnhzamsxnzhAM")
     post=get_object_or_404(Post,id=id)
-    print(post,'pppppppppppppppppppppppppppppppppppp')
+    
+    # post=Post.objects.filter(id=id).first()
+    
     # List of active comments for this post
     comment = Comment.objects.filter(post=post)
     print(comment,"comment---------------------")
@@ -328,3 +330,12 @@ def delete_reply(request, id):
 
 
 
+@login_required
+def post_view(request, id):
+    post = get_object_or_404(Post, id=id)
+    print(post,"&&&&&&&&&&&&&&&&&&&&&&")
+    post.views += 1
+    post.save()
+    comment_form = CommentForm()
+    form = ReplyForm()
+    return render(request, 'post_view.html', {'post': post,'comment_form':comment_form ,'form':form})

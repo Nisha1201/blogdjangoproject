@@ -6,7 +6,9 @@ from .models import Profile, Post,Comment,Reply
 # class imageAdmin(admin.ModelAdmin):
 #     list_display = ["title","image", "likes","dislikes"]
 
-admin.site.register(Post)
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+     list_display=["views","image"]
 admin.site.register(Profile)
 
 @admin.register(Comment)

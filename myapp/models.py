@@ -26,12 +26,13 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='liked_posts',blank=True )
     # dislikes = models.ManyToManyField(User, related_name='disliked_posts')
+    views= models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('comment_view', kwargs={'id':self.id})
+    # def get_absolute_url(self):
+    #     return reverse('comment_view', kwargs={'id':self.id})
 
     # def get_comments(self):
     #     return self.comments.filter(parent_comment=None).filter(active=True)
@@ -56,9 +57,7 @@ class Comment(models.Model):
     def __str__(self):
         return str(self.comment_name) + ' comment ' + str(self.comment_body)
 
-    def get_comments(self):
-        return Comment.objects.filter(parent_comment=self).filter(active=True)
-    
+
     def comment_count(self):
         return self.comments.count()
 
@@ -69,6 +68,7 @@ class Reply(models.Model):
         author = models.ForeignKey(User, on_delete=models.CASCADE)
         created_at = models.DateTimeField(auto_now_add=True)
         likes = models.ManyToManyField(User, related_name='liked_reply',blank=True )
+
         def __str__(self):
             return self.reply_body
     

@@ -28,19 +28,22 @@ a,button {
       {% if posts %}
       {% for post in posts %}
   <div class="post">
-      <h3>{{ post.title }}</h3>
+    <h3><a href="{% url 'post_view' post.id %}">{{ post.title }}</a></h3>
       <img src="{{post.image.url}}" alt="image" />
       <p>{{ post.content }}</p>
       <p>Author: {{ post.author }}</p>
       <p>Date: {{ post.created_at }}</p>
       <p>total comment:{{post.comments.all|length}}</p>
+      <p>Views: {{ post.views }}</p>
+      
   </div> 
- 
+  
   {% comment %} {% for post in posts %}
   <h2>{{ post.title }}</h2>
   <p>{{ post.content }}</p>
   <p>Comments: {{ post.total_comments }}</p>
 {% endfor %} {% endcomment %}
+
 
       <form class="form" action="{% url 'like_post' post.id %}" method="post" novalidate >
         {% csrf_token %}
@@ -66,6 +69,7 @@ a,button {
         <form method="post" action="{% url 'comment_view' post.id %}">
               {% csrf_token %}
               {{ comment_form.as_p }}
+              
                 <button type="submit" class="btn btn-primary">Comment</button>
         </form>
 
